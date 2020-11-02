@@ -1,9 +1,14 @@
 /* Add application styles & imports to this file! */
+*,
+:after,
+:before {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 body {
   font-family: Lato;
   background-color: #111;
   color: #eee;
   height: 100vh;
-  width: 100vw;
   margin: 0;
 }

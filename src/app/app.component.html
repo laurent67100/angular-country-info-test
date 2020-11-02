@@ -5,6 +5,25 @@
   </div>
 </header>
 <main>
-
-  <div></div>
+  <div class="alphabet-container">
+    <span
+      *ngFor="let letter of alphabetLetters"
+      (click)="showCountryInfo(letter)"
+      [class.selected]="selectedLetter === letter"
+      >{{ letter }}</span
+    >
+  </div>
+  <div class="countries">
+    <span class="header">Flag</span>
+    <span class="header">Name</span>
+    <span class="header">Capital</span>
+    <span class="header">Currencies</span>
+    <!-- TODO list countries matching the currently selected letter -->
+    <ng-container *ngFor="let country of countries$ | async">
+      <img [src]="country.flagUrl" />
+      <span>{{ country.name }}</span>
+      <span>{{ country.capital }}</span>
+      <span>{{ country.currencies.join(", ") }}</span>
+    </ng-container>
+  </div>
 </main>
