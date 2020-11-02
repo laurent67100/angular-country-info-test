@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { forkJoin, Observable, of, Subject } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { forkJoin, Observable, of } from 'rxjs';
 import { CountryService } from '../api/country.service';
 import { ICountry } from './country.interface';
 import { mergeMap } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { mergeMap } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
   /** Array of alphabet letters **/
   alphabetLetters = Array.from(Array(26)).map((_, i) =>
     String.fromCharCode(i + 65)
@@ -20,9 +20,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   /** List of countries that match the currently selected letter **/
   countries$: Observable<ICountry[]> = of([]);
-
-  /** @ignore Pattern used to close all subscriptions */
-  private _componentDestroyed$: Subject<void> = new Subject();
 
   constructor(private countryService: CountryService) {}
 
@@ -44,12 +41,5 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.showCountryInfo('A');
-  }
-
-  /** @ignore */
-  ngOnDestroy(): void {
-    // unsubscribe all subscriptions
-    this._componentDestroyed$.next();
-    this._componentDestroyed$.complete();
   }
 }

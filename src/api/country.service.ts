@@ -38,15 +38,12 @@ export class CountryService {
     return this.httpClient
       .get<RestCountry>(`https://restcountries.eu/rest/v2/alpha/${code}`)
       .pipe(
-        map(
-          (country) =>
-            <ICountry>{
-              name: country.name,
-              capital: country.capital,
-              currencies: country.currencies?.map((curr) => curr.code),
-              flagUrl: country.flag,
-            }
-        )
+        map((country) => ({
+          name: country.name,
+          capital: country.capital,
+          currencies: country.currencies?.map((curr) => curr.code),
+          flagUrl: country.flag,
+        }))
       );
   }
 }
