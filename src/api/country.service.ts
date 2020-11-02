@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { CurrenciesEntity, RestCountry } from './rest-country.interface';
+import { RestCountry } from './rest-country.interface';
 import { ICountry } from '../app/country.interface';
 
 @Injectable({
@@ -49,14 +49,4 @@ export class CountryService {
         )
       );
   }
-
-  getCountryCapital(code: string): Observable<string> {
-    return this._getCountry(code).pipe(map((country) => country.capital));
-  }
-
-  getCountryCurrencies(code: string): Observable<CurrenciesEntity[]> {
-    return this._getCountry(code).pipe(map((country) => country.currencies));
-  }
-
-  private _getCountry(code: string): Observable<RestCountry> {}
 }
