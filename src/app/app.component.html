@@ -20,12 +20,6 @@
       <span class="header">Capital</span>
       <span class="header">Currencies</span>
       <!-- TODO list countries matching the currently selected letter -->
-      <ng-container *ngFor="let country of countries$ | async">
-        <img [src]="country.flagUrl" />
-        <span>{{ country.name }}</span>
-        <span>{{ country.capital }}</span>
-        <span>{{ country.currencies.join(", ") }}</span>
-      </ng-container>
     </ng-container>
   </div>
 </main>
