@@ -35,18 +35,17 @@ export class CountryService {
    * Gets the info for the country identified by the specified country code
    * **/
   getCountryInfo(code: string): Observable<ICountry> {
+    // TODO: how would you handle an error on the api endpoint?
+    // TODO-bonus: how to retry the endpoint call up to 3 times on failure?
     return this.httpClient
       .get<RestCountry>(`https://restcountries.eu/rest/v2/alpha/${code}`)
       .pipe(
-        map(
-          (country) =>
-            <ICountry>{
-              name: country.name,
-              capital: country.capital,
-              currencies: country.currencies?.map((curr) => curr.code),
-              flagUrl: country.flag,
-            }
-        )
+        map((country) => ({
+          name: country.name,
+          capital: country.capital,
+          currencies: country.currencies?.map((curr) => curr.code),
+          flagUrl: country.flag,
+        }))
       );
   }
 }

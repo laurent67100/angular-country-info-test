@@ -1,15 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { forkJoin, Observable, of, Subject } from 'rxjs';
-import { CountryService } from '../api/country.service';
+import { Observable, of } from 'rxjs';
 import { ICountry } from './country.interface';
-import { mergeMap } from 'rxjs/operators';
 
+/***
+ * TODO: Initial view should be set to the letter 'A'
+ * TODO: Show the list of countries when letter is clicked
+ */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
   /** Array of alphabet letters **/
   alphabetLetters = Array.from(Array(26)).map((_, i) =>
     String.fromCharCode(i + 65)
@@ -21,35 +23,13 @@ export class AppComponent implements OnInit, OnDestroy {
   /** List of countries that match the currently selected letter **/
   countries$: Observable<ICountry[]> = of([]);
 
-  /** @ignore Pattern used to close all subscriptions */
-  private _componentDestroyed$: Subject<void> = new Subject();
-
-  constructor(private countryService: CountryService) {}
+  constructor() {}
 
   /** Called when a letter is selected **/
   showCountryInfo(letter: string) {
     this.selectedLetter = letter;
-    this.countries$ = this.countryService
-      .getCountryCodes(letter)
-      .pipe(
-        mergeMap((countryCodes) =>
-          forkJoin(
-            countryCodes.map((countryCode) =>
-              this.countryService.getCountryInfo(countryCode)
-            )
-          )
-        )
-      );
-  }
-
-  ngOnInit(): void {
-    this.showCountryInfo('A');
-  }
-
-  /** @ignore */
-  ngOnDestroy(): void {
-    // unsubscribe all subscriptions
-    this._componentDestroyed$.next();
-    this._componentDestroyed$.complete();
+    // TODO create the observable of the countries matching the selected letter
+    // TODO use the api service
+    // this.countries$ =
   }
 }
